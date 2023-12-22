@@ -163,24 +163,26 @@ class ProfCoursTest extends TestCase
         print __METHOD__."\n";
         $conn = $this->getConnection();
         
-        // Prof
+        // Ajout des professeurs
         print "ADD prof \n";
         foreach (self::$prof_a as $prof) {
             $prof->add($conn);
         }
-        $expected = count(self::$prof_a);
-        $num_records = Prof::count($conn);
-        $this->assertEquals($expected, $num_records, "Enregistrement des profs ...\n");
-        $this->assertCount($num_records, self::$prof_a, "Enregistrement des profs ...\n");
-
-        
-        // Cours
-        
+        $expectedProfs = count(self::$prof_a);
+        $numProfRecords = Prof::count($conn);
+        $this->assertEquals($expectedProfs, $numProfRecords, "Enregistrement des profs ...\n");
+        $this->assertCount($numProfRecords, self::$prof_a, "Enregistrement des profs ...\n");
+    
+        // Ajout des cours
         print "ADD cours\n";
         foreach (self::$cours_a as $cours) {
             $cours->add($conn);
         }
-        
+        $expectedCours = count(self::$cours_a);
+        $numCoursRecords = Cours::count($conn);
+        $this->assertEquals($expectedCours, $numCoursRecords, "Enregistrement des cours ...\n");
+        $this->assertCount($numCoursRecords, self::$cours_a, "Enregistrement des cours ...\n");
+    
         /**
         *
         * Question 8 : Dans la fonction « testAdd() », s’inspirer de test d’ajout des profs pour tester l’ajout des cours.   
@@ -209,7 +211,14 @@ class ProfCoursTest extends TestCase
         print "################################################################\n\n";
         $this->assertCount(count(Self::$prof_a), $record_prof_a, "Nombre d'enregistrement égale pour Prof\n");
 
-        
+        $record_cours_a = Cours::printAll($conn);
+        print "########## - LISTE DES COURS - ########## \n";
+        foreach ($record_cours_a as $record_cours) {
+        print $record_cours;
+        }
+        print "################################################################\n\n";
+        $this->assertCount(count(self::$cours_a), $record_cours_a, "Nombre d'enregistrement égale pour Cours\n");
+    }
         // Cours
         
         /**
@@ -220,7 +229,6 @@ class ProfCoursTest extends TestCase
         */
   
         
-    }
     
     
     /**
